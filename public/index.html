@@ -1,20 +1,27 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <title>Clima</title>
+
     <link rel="stylesheet" href="style.css">
-    <title>Como esta o tempo aí ?</title>
 </head>
 <body>
-    
+
     <div class="container">
+
         <div class="box">
-            Quadrado central
+            <h2>🌦️ Clima</h2>
+
+            <input type="text" id="cidade" placeholder="Digite a cidade">
+            <button onclick="buscarClima()">Buscar</button>
+
+            <div id="resultado"></div>
         </div>
+
     </div>
 
-    <script src="script.js"></script>
+    <script src="clima.js"></script>
 </body>
 </html>

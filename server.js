@@ -4,15 +4,15 @@ const path = require('path')
 const app = express()
 const PORT = 3000
 
-// Servir arquivos estáticos
+// Servir arquivos da pasta public
 app.use(express.static(path.join(__dirname, 'public')))
 
-// Rota pricipal
+// Rota principal
 app.get('/', (req, res) => {
-    res.sendfile(path.join(__dirname , 'public', 'index.html'))
+    res.sendFile(path.join(__dirname, 'public', 'index.html'))
 })
 
-// Inciar servidor
+// Iniciar servidor
 app.listen(PORT, () => {
-    console.log(`Servidor rodando em http//localhost:${PORT}`)
+    console.log(`Servidor rodando em http://localhost:${PORT}`)
 })
