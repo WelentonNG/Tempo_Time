@@ -1,7 +1,3 @@
-let Credentials = {
-    Login: 'admin',
-    Password: '1234'
-}
 const PageClima = '/clima/index.html'
 
 let InputLogin = document.getElementById('InputLogin')
@@ -11,20 +7,29 @@ let loginForm = document.getElementById('loginForm')
 
 loginForm.addEventListener('submit', login)
 
-function login(event) {
-    event.preventDefault() 
+async function login(event) {
+    event.preventDefault()
 
-    let usuario = InputLogin.value
-    let senha = InputPassword.value
+    const usuario = InputLogin.value
+    const senha = InputPassword.value
 
-    if (usuario === Credentials.Login && senha === Credentials.Password) {
+    try {
+        const resposta = await fetch('/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ login: usuario, senha: senha })
+        })
 
-        localStorage.setItem("logado", "true")
-        window.location.href = PageClima
+        const dados = await resposta.json()
 
-    } else {
-        console.log("Houve algum problema de login, contate o administrador")
-        alert("Login inválido")
+        if (resposta.ok && dados.sucesso) {
+            localStorage.setItem('logado', 'true')
+            window.location.href = PageClima
+        } else {
+            alert(dados.erro || 'Login inválido')
+        }
+    } catch (err) {
+        alert('Erro ao conectar com o servidor.')
     }
 }
 

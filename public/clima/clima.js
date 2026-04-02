@@ -1,44 +1,66 @@
+function getIconeClima(codigo) {
+    if (codigo === 0) return '☀️'
+    if (codigo <= 2) return '⛅'
+    if (codigo === 3) return '☁️'
+    if (codigo <= 67) return '🌧️'
+    if (codigo <= 77) return '❄️'
+    if (codigo <= 82) return '🌦️'
+    return '⛈️'
+}
+
 async function buscarClima() {
-    const cidade = document.getElementById('cidade').value
+    const cidade = document.getElementById('cidade').value.trim()
+    const resultado = document.getElementById('resultado')
 
     if (!cidade) {
-        alert('Digite uma cidade')
+        resultado.innerHTML = '<p class="erro">Digite o nome de uma cidade.</p>'
         return
     }
 
+    resultado.innerHTML = '<p class="resultado-vazio">Buscando...</p>'
+
     try {
-        // 1. Converter cidade → coordenadas
-        const geoRes = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${cidade}&count=1&language=pt&format=json`)
+        const geoRes = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(cidade)}&count=1&language=pt&format=json`)
         const geoData = await geoRes.json()
 
         if (!geoData.results) {
-            document.getElementById('resultado').innerText = 'Cidade não encontrada'
+            resultado.innerHTML = '<p class="erro">Cidade não encontrada.</p>'
             return
         }
 
-        const lat = geoData.results[0].latitude
-        const lon = geoData.results[0].longitude
-        const nome = geoData.results[0].name
+        const { latitude: lat, longitude: lon, name: nome, country } = geoData.results[0]
 
-        // 2. Buscar clima
         const climaRes = await fetch(
             `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true`
         )
-
         const climaData = await climaRes.json()
 
-        const temp = climaData.current_weather.temperature
-        const vento = climaData.current_weather.windspeed
+        const { temperature: temp, windspeed: vento, weathercode: codigo } = climaData.current_weather
+        const icone = getIconeClima(codigo)
 
-        // 3. Mostrar
-        document.getElementById('resultado').innerHTML = `
-            <h3>${nome}</h3>
-            <p>🌡️ Temperatura: ${temp}°C</p>
-            <p>💨 Vento: ${vento} km/h</p>
+        resultado.innerHTML = `
+            <div class="clima-info">
+                <div class="cidade-nome">${nome}${country ? ', ' + country : ''}</div>
+                <div class="clima-icone">${icone}</div>
+                <div class="temperatura">${temp}°C</div>
+                <div class="detalhes">
+                    <div class="detalhe">
+                        <div class="valor">💨 ${vento}</div>
+                        <div class="label">km/h vento</div>
+                    </div>
+                    <div class="detalhe">
+                        <div class="valor">📍 ${lat.toFixed(1)}°</div>
+                        <div class="label">latitude</div>
+                    </div>
+                </div>
+            </div>
         `
-
     } catch (erro) {
         console.error(erro)
-        document.getElementById('resultado').innerText = 'Erro ao buscar dados'
+        resultado.innerHTML = '<p class="erro">Erro ao buscar dados do clima.</p>'
     }
 }
+
+document.getElementById('cidade').addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') buscarClima()
+})

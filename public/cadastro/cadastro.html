@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Criar Conta - Tempo Time</title>
+  <link rel="stylesheet" href="/cadastro/cadastro.css">
+</head>
+
+<body>
+  <div class="page">
+    <div class="cadastro-box">
+      <div class="logo">🌤️</div>
+      <h2>Criar Conta</h2>
+      <p class="subtitle">Preencha os dados para se cadastrar</p>
+
+      <form id="cadastroForm">
+        <div class="field">
+          <label>Usuário</label>
+          <input type="text" id="InputLogin" placeholder="Escolha um usuário" required>
+        </div>
+
+        <div class="field">
+          <label>Senha</label>
+          <input type="password" id="inputPassword" placeholder="Crie uma senha" required>
+        </div>
+
+        <div class="field">
+          <label>Confirmar Senha</label>
+          <input type="password" id="inputConfirmPassword" placeholder="Repita a senha" required>
+        </div>
+
+        <button type="submit">Criar Conta</button>
+      </form>
+
+      <p class="link-login">Já tem conta? <a href="/">Fazer login</a></p>
+    </div>
+  </div>
+
+  <script src="/cadastro/cadastro.js"></script>
+</body>
+</html>

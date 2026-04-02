@@ -3,32 +3,32 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Login - Time_Tempo</title>
-
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+  <title>Login - Tempo Time</title>
   <link rel="stylesheet" href="/login/login.css">
 </head>
 
 <body>
   <div class="page">
     <div class="login-box">
-      <h3 class="mb-4">Faça o seu login para entrar no TEMPO TIME</h3>
+      <div class="logo">🌤️</div>
+      <h2>Tempo Time</h2>
+      <p class="subtitle">Faça login para continuar</p>
 
-  
       <form id="loginForm">
-        <div class="mb-3">
-          <label class="form-label">Login</label>
-          <input type="text" class="form-control" id="InputLogin" required>
+        <div class="field">
+          <label>Usuário</label>
+          <input type="text" id="InputLogin" placeholder="Digite seu usuário" required>
         </div>
 
-        <div class="mb-3">
-          <label class="form-label">Senha</label>
-          <input type="password" class="form-control" id="inputPassword" required>
+        <div class="field">
+          <label>Senha</label>
+          <input type="password" id="inputPassword" placeholder="Digite sua senha" required>
         </div>
 
-        <button type="submit" class="btn btn-primary w-100">Entrar</button>
+        <button type="submit">Entrar</button>
       </form>
 
+      <p class="link-cadastro">Não tem conta? <a href="/cadastro/cadastro.html">Criar conta</a></p>
     </div>
   </div>
 
